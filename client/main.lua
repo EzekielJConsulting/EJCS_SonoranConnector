@@ -46,4 +46,6 @@ function add911(callerName, location, callDesc, xCoordinate, yCoordinate)
         "metaData": metaData -- OPTIONAL: X & Y Corrdinates for livemap
     }
 
+    apiCall("emergency", "CALL_911", callData)
+
 end

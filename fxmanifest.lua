@@ -11,8 +11,14 @@ shared_scripts {
 server_scripts {
     'server/*'
 }
+server_exports {
+    
+}
 client_scripts {
     'server/*'
+}
+exports {
+    'add911'
 }
 
 dependencies {
