@@ -29,8 +29,8 @@ function apiCall(callCat, callType, data)
     )
 end
 
-
-function add911(callerName, location, callDesc, xCoordinate, yCoordinate)
+RegisterNetEvent('EJDS_SonoranConnector:add911')
+AddEventHandler('EJDS_SonoranConnector:add911', function (callerName, location, callDesc, xCoordinate, yCoordinate)
     local metaData = nil
     if xCoordinate and yCoordinate then
         metaData = {
@@ -50,4 +50,5 @@ function add911(callerName, location, callDesc, xCoordinate, yCoordinate)
         "metaData": metaData -- OPTIONAL: X & Y Corrdinates for livemap
     }
     apiCall("emergency", "CALL_911", callData)
-end
+end)
+  
