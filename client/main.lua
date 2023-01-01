@@ -1,4 +1,5 @@
 function apiCall(callCat, callType, data)
+    print("Building Payload")
     -- Body payload object
     local payload = {}
 
@@ -9,16 +10,17 @@ function apiCall(callCat, callType, data)
 
     -- Add this data to our payload
     payload["data"] = data
-
+    print("Sending Data to API")
     -- Send POST request with JSON encoded body (payload)
     PerformHttpRequest(config.apiBase..string.lower(callCat).."/"..string.lower(callType), 
         function(statusCode, res, headers)
             if statusCode == 200 and res ~= nil then
                 -- Status code 200 (Success)
-                return tostring(res)
                 print("result: "..tostring(res))
+                return tostring(res)
+                
             else
-                return false
+                return tostring(res)
                 -- Error code
                 print(("CAD API ERROR: %s %s"):format(statusCode, res))
             end
@@ -31,6 +33,7 @@ end
 
 RegisterNetEvent('EJDS_SonoranConnector:add911')
 AddEventHandler('EJDS_SonoranConnector:add911', function (callerName, location, callDesc, xCoordinate, yCoordinate)
+    print("Building Call")
     local metaData = nil
     if xCoordinate and yCoordinate then
         metaData = {
@@ -49,6 +52,7 @@ AddEventHandler('EJDS_SonoranConnector:add911', function (callerName, location, 
         "description": callDesc, --Call Details
         "metaData": metaData -- OPTIONAL: X & Y Corrdinates for livemap
     }
-    apiCall("emergency", "CALL_911", callData)
+    print(callData)
+    print(apiCall("emergency", "CALL_911", callData))
 end)
   
