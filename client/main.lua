@@ -11,18 +11,22 @@ function apiCall(callCat, callType, data)
     payload["data"] = data
 
     -- Send POST request with JSON encoded body (payload)
-    PerformHttpRequest(config.apiBase..string.lower(callCat).."/"..string.lower(callType)), function(statusCode, res, headers)
-        if statusCode == 200 and res ~= nil then
-            -- Status code 200 (Success)
-            return tostring(res)
-            print("result: "..tostring(res))
-        else
-            return false
-            -- Error code
-            print(("CAD API ERROR: %s %s"):format(statusCode, res))
-        end
-    end, "POST", json.encode(payload), {["Content-Type"]="application/json"})
-
+    PerformHttpRequest(config.apiBase..string.lower(callCat).."/"..string.lower(callType), 
+        function(statusCode, res, headers)
+            if statusCode == 200 and res ~= nil then
+                -- Status code 200 (Success)
+                return tostring(res)
+                print("result: "..tostring(res))
+            else
+                return false
+                -- Error code
+                print(("CAD API ERROR: %s %s"):format(statusCode, res))
+            end
+        end, 
+        "POST", 
+        json.encode(payload), 
+        {["Content-Type"]="application/json"}
+    )
 end
 
 
@@ -45,7 +49,5 @@ function add911(callerName, location, callDesc, xCoordinate, yCoordinate)
         "description": callDesc, --Call Details
         "metaData": metaData -- OPTIONAL: X & Y Corrdinates for livemap
     }
-
     apiCall("emergency", "CALL_911", callData)
-
 end
